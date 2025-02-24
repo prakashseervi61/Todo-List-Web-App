@@ -1,0 +1,257 @@
+/* ===== General Styles ===== */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    list-style: none;
+}
+
+body {
+    background: linear-gradient(90deg, rgba(46,7,63,1) 6%, rgba(104,22,148,1) 100%);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+/* ===== Main Container ===== */
+.container {
+    width: 100%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Header ===== */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.details h1 {
+    font-size: 24px;
+}
+
+.details p {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #fff;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.progress {
+    width: 0;
+    height: 10px;
+    background: #FF7B22;
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+
+/* Task Counter */
+.num-task {
+    width: 60px;
+    height: 60px;
+    background: #EBD3F8;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+}
+
+/* ===== Task Input Section ===== */
+.task-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.task-input {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background: #210c2c;
+    color: #fff;
+    font-size: 16px;
+}
+
+.add-task-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #EBD3F8;
+    color: #000;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+/* ===== Task List ===== */
+.task-list {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.task-item.completed {
+    background: rgba(0, 255, 0, 0.2);
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.task-checkbox {
+    cursor: pointer;
+}
+
+.task-label {
+    flex: 1;
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+.delete-task {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #ff4d4d;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+    .task-input {
+        font-size: 14px;
+        padding: 10px;
+    }
+    .add-task-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    .task-item {
+        font-size: 14px;
+    }
+}
+
+
+
+/* ===== Scrollable Task List ===== */
+.task-list {
+    margin-top: 20px;
+    max-height: 250px; /* Set max height */
+    overflow-y: auto; /* Enable vertical scroll */
+    padding-right: 10px; /* Avoid cutting off text */
+}
+
+/* Custom Scrollbar (for Webkit Browsers like Chrome) */
+.task-list::-webkit-scrollbar {
+    width: 8px; /* Scrollbar width */
+}
+
+.task-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.2); /* Track color */
+    border-radius: 5px;
+}
+
+.task-list::-webkit-scrollbar-thumb {
+    background: #FF7B22; /* Scrollbar color */
+    border-radius: 5px;
+}
+
+.task-list::-webkit-scrollbar-thumb:hover {
+    background: #ff6200; /* Hover effect */
+}
+
+/* Task Item Design */
+.task-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+
+/* ===== Bigger Checkboxes & Delete Buttons ===== */
+
+.task-checkbox {
+    width: 20px; /* Increased size */
+    height: 20px;
+    cursor: pointer;
+    accent-color: #FF7B22; /* Change checkbox color */
+}
+
+/* Task List Item */
+.task-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px; /* Increased padding */
+    margin-bottom: 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+/* Bigger Task Label */
+.task-label {
+    flex: 1;
+    margin-left: 15px;
+    font-size: 18px; /* Bigger text */
+}
+
+/* Bigger Delete Button */
+.delete-task {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px; /* Bigger delete icon */
+    color: #ff4d4d;
+    padding: 5px;
+    transition: transform 0.2s, color 0.2s;
+}
+
+/* Hover Effect for Delete Button */
+.delete-task:hover {
+    color: #ff0000;
+    transform: scale(1.2); /* Slight zoom effect */
+}
+
+

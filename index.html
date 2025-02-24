@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ===== main container ===== -->
+
+    <div class="container">
+
+        <!-- ===== header ===== -->
+
+        <div class="header">
+            <div class="details">
+                <h1>Todo App</h1>
+                <p>Keep track of your tasks</p>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+            </div>
+            <div class="num-task">
+                <p></p>
+            </div>
+        </div>
+
+        <!-- ===== task section ===== -->
+
+        <div class="task-section">
+            <input type="text" id="taskInput" class="task-input" placeholder="Add a new task">
+            <button id="newTask" class="add-task-btn">+</button>
+        </div>
+
+        <!-- ===== task list ===== -->
+
+        <div class="task-list" id="tasksList">
+            <ul></ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
