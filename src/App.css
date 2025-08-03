@@ -1,77 +1,169 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
 }
 
-body{
-    font-family: 'Poppins', sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+.app-wrapper {
+  background-color: #111;
+  color: #fff;
+  min-height: 100vh;
+  padding: 40px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
 }
 
-.app-container{
-    padding:25px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    text-align: center;
+.app-wrapper.light {
+  background-color: #f0f0f0;
+  color: #111;
 }
 
-h1{
-    color: #333;
-    margin-bottom: 15px;
+.theme-toggle {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 8px 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
-.input-container{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-    gap: 20px;
+.app-container {
+  background-color: #1f1f1f;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  padding: 30px;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  min-height: 200px;
+  transition: all 0.3s ease;
 }
 
-.input-container input{
-    width: 60%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+.app-wrapper.light .app-container {
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.input-container button{
-    padding: 5px 10px;
-    border: none;
-    border-radius: 3px;
-    background-color: #28a745;
-    color: white;
-    cursor: pointer;
+h1 {
+  margin-bottom: 20px;
 }
 
-
-ul{
-    list-style: none;
-    padding: 0;
-    width: 100%;
-    text-align: left;   
+.input-section {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-li{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+input[type="text"] {
+  background-color: #111;
+  color: #f5f5f5;
+  border: 1px solid #444;
+  padding: 10px;
+  border-radius: 4px;
+  outline: none;
+  flex-grow: 1;
+  font-size: 16px;
 }
 
-.delete-btn{
-    padding: 5px 10px;
-    border: none;
-    border-radius: 3px;
-    background-color: #dc3545;
-    color: white;
-    cursor: pointer;
+input[type="text"]::placeholder {
+  color: #aaa;
+}
+
+.app-wrapper.light input[type="text"] {
+  background-color: #fff;
+  color: #111;
+  border: 1px solid #ccc;
+}
+
+.app-wrapper.light input[type="text"]::placeholder {
+  color: #666;
+}
+
+.add-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* List container */
+ul {
+  list-style-type: none;
+  padding: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.app-wrapper.light ul {
+  scrollbar-color: #bbb #f0f0f0;
+}
+
+.app-wrapper.dark ul {
+  scrollbar-color: #555 #222;
+}
+
+ul::-webkit-scrollbar {
+  width: 8px;
+}
+
+ul::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+ul::-webkit-scrollbar-thumb {
+  background-color: #bbb;
+  border-radius: 4px;
+  border: 2px solid #f0f0f0;
+}
+
+.app-wrapper.dark ul::-webkit-scrollbar-track {
+  background: #222;
+}
+
+.app-wrapper.dark ul::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border: 2px solid #222;
+}
+
+/* List items */
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1e1e1e;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  color: #f5f5f5;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.app-wrapper.light li {
+  background-color: #f9f9f9;
+  color: #111;
+  border: 1px solid #ccc;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
 }

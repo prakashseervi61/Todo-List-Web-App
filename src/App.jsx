@@ -1,65 +1,53 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import './App.css';
 
-export const App = () => {
+function App() {
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState('');
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const [todo,setTodo] = useState("");
-  const [todoList,setTodoList] = useState([]);
+  const addTask = () => {
+    if (newTask.trim() === '') return;
+    setTasks([...tasks, newTask]);
+    setNewTask('');
+  };
 
-  const addTodo = () => {
-    if (todo.trim() === "") return;
-    setTodoList([...todoList,{id: Date.now(), text: todo, completed: false}]);
-    setTodo("");
-  }
+  const deleteTask = (index) => {
+    const updatedTasks = tasks.filter((_, i) => i !== index);
+    setTasks(updatedTasks);
+  };
 
-  const toggleCompleted = (id) => {
-    setTodoList(
-      todoList.map(item => 
-        item.id === id ? {...item, completed: !item.completed} : item
-    ))
-  }
-
-  const deleteTodo = (id) => {
-    setTodoList(
-      todoList.filter(item => item.id !== id) 
-    )
-  }
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   return (
-    <div className='app-container'>
-      <h1>To-Do-List</h1>
-      <div className='input-container'>
-        <input 
-          type="text"
-          placeholder='Add a new task'
-          value={todo}
-          onChange={(e) => setTodo(e.target.value)}
-        />
-        <button className='add-btn' onClick={addTodo} >Add</button>
+    <div className={`app-wrapper ${isDarkMode ? 'dark' : 'light'}`}>
+      <button className="theme-toggle" onClick={toggleTheme}>
+        {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+      </button>
+      <div className="app-container">
+        <h1>To-Do-List</h1>
+        <div className="input-section">
+          <input
+            type="text"
+            placeholder="Add a new task"
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+          />
+          <button onClick={addTask} className="add-btn">Add</button>
+        </div>
+        <ul>
+          {tasks.map((task, index) => (
+            <li key={index}>
+              <span>{task}</span>
+              <button className="delete-btn" onClick={() => deleteTask(index)}>Delete</button>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul>
-        {todoList.map((item) => (
-          <li 
-          key={item.id} 
-          onClick={() => toggleCompleted(item.id)}
-          style={{
-            cursor: 'pointer',
-            textDecoration: item.completed ? 'line-through' : 'none',
-            color: item.completed ? 'gray' : 'black'
-          }}
-          >
-            <span>{item.text}</span>
-            <button
-              className='delete-btn'
-              onClick={(e) => {
-                e.stopPropagation();
-                deleteTodo(item.id);
-              }}
-            >Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>  
-  ) 
+    </div>
+  );
 }
 
-export default App
+export default App;
