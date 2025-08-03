@@ -2,6 +2,7 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  overflow: hidden;
 }
 
 .app-wrapper {
@@ -166,4 +167,76 @@ li {
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
+}
+
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 12px;
+}
+
+.title-row h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.task-count {
+  font-size: 1.05rem;
+  color: #999;
+  margin-left: 12px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-bar-bg {
+  flex: 1;
+  height: 10px;
+  background: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fg {
+  height: 100%;
+  background: #28a745;
+  border-radius: 5px 0 0 5px;
+  transition: width 0.4s;
+}
+
+.progress-label {
+  font-size: 0.98rem;
+  color: #888;
+  min-width: 48px;
+}
+
+.app-wrapper.dark .progress-bar-bg {
+  background: #333;
+}
+.app-wrapper.dark .progress-bar-fg {
+  background: #34d058;
+}
+.app-wrapper.dark .progress-label {
+  color: #aaa;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Optional: bigger checkbox */
+.task-checkbox {
+  width: 18px;
+  height: 18px;
 }
