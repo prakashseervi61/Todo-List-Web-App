@@ -36,9 +36,12 @@ function App() {
 
   return (
     <div className={`app-wrapper ${isDarkMode ? 'dark' : 'light'}`}>
-      <button className="theme-toggle" onClick={toggleTheme}>
-        {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-      </button>
+      <div className="top-bar">
+        <button className="reset-btn" onClick={() => setTasks([])}>Reset</button>
+        <button className="theme-toggle" onClick={toggleTheme}>
+          {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+        </button>
+      </div>
       <div className="app-container">
         <div className="title-row">
           <h1>To-Do-List</h1>
@@ -60,6 +63,9 @@ function App() {
             placeholder="Add a new task"
             value={newTask}
             onChange={e => setNewTask(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') addTask();
+            }}
           />
           <button onClick={addTask} className="add-btn">Add</button>
         </div>

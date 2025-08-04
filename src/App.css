@@ -21,17 +21,38 @@ body, html {
   color: #111;
 }
 
-.theme-toggle {
+.top-bar {
   position: absolute;
   top: 15px;
-  right: 15px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+.theme-toggle,
+.reset-btn {
+  min-width: 100px;
   padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.reset-btn {
+  background-color: #ffc107;
+  color: black;
+}
+
+.theme-toggle {
   background-color: #28a745;
   color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
 }
 
 .app-container {
@@ -44,6 +65,7 @@ body, html {
   text-align: center;
   min-height: 200px;
   transition: all 0.3s ease;
+  margin-top: 80px;
 }
 
 .app-wrapper.light .app-container {
@@ -97,7 +119,6 @@ input[type="text"]::placeholder {
   font-size: 16px;
 }
 
-/* List container */
 ul {
   list-style-type: none;
   padding: 0;
@@ -138,7 +159,6 @@ ul::-webkit-scrollbar-thumb {
   border: 2px solid #222;
 }
 
-/* List items */
 li {
   display: flex;
   justify-content: space-between;
@@ -235,7 +255,6 @@ li {
   gap: 8px;
 }
 
-/* Optional: bigger checkbox */
 .task-checkbox {
   width: 18px;
   height: 18px;
