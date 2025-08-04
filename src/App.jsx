@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
 import './App.css';
+import { FaTrash, FaEdit } from 'react-icons/fa';
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [editedText, setEditedText] = useState('');
 
-  // Add new task
   const addTask = () => {
-    if (newTask.trim() === '') return;
+    if (newTask.trim() === '' || editingIndex !== null) return;
     setTasks([...tasks, { text: newTask, completed: false }]);
     setNewTask('');
   };
 
-  // Delete task
   const deleteTask = (index) => {
     setTasks(tasks.filter((_, i) => i !== index));
+    if (editingIndex === index) {
+      setEditingIndex(null);
+      setEditedText('');
+    }
   };
 
-  // Toggle task completion
   const toggleCompleted = (index) => {
     setTasks(
       tasks.map((task, i) =>
@@ -27,10 +31,22 @@ function App() {
     );
   };
 
-  // Theme toggle
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
-  // Progress calculations
+  const handleEdit = (index) => {
+    setEditingIndex(index);
+    setEditedText(tasks[index].text);
+  };
+
+  const saveEdit = (index) => {
+    if (editedText.trim() === '') return;
+    const updatedTasks = [...tasks];
+    updatedTasks[index].text = editedText;
+    setTasks(updatedTasks);
+    setEditingIndex(null);
+    setEditedText('');
+  };
+
   const completedCount = tasks.filter(t => t.completed).length;
   const progress = tasks.length === 0 ? 0 : (completedCount / tasks.length) * 100;
 
@@ -63,11 +79,12 @@ function App() {
             placeholder="Add a new task"
             value={newTask}
             onChange={e => setNewTask(e.target.value)}
-            onKeyDown={(e) => {
+            onKeyDown={e => {
               if (e.key === 'Enter') addTask();
             }}
+            disabled={editingIndex !== null}
           />
-          <button onClick={addTask} className="add-btn">Add</button>
+          <button onClick={addTask} className="add-btn" disabled={editingIndex !== null}>Add</button>
         </div>
         <ul>
           {tasks.map((task, index) => (
@@ -79,21 +96,40 @@ function App() {
                   onChange={() => toggleCompleted(index)}
                   className="task-checkbox"
                 />
-                <span
-                  style={{
-                    textDecoration: task.completed ? 'line-through' : 'none',
-                    color: task.completed ? 'gray' : undefined
-                  }}
-                >
-                  {task.text}
-                </span>
+                {editingIndex === index ? (
+                  <input
+                    type="text"
+                    value={editedText}
+                    onChange={(e) => setEditedText(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') saveEdit(index);
+                    }}
+                    autoFocus
+                  />
+                ) : (
+                  <span
+                    style={{
+                      textDecoration: task.completed ? 'line-through' : 'none',
+                      color: task.completed ? 'gray' : undefined
+                    }}
+                  >
+                    {task.text}
+                  </span>
+                )}
               </label>
-              <button
-                className="delete-btn"
-                onClick={() => deleteTask(index)}
-              >
-                Delete
-              </button>
+              <div className="action-buttons">
+                {editingIndex === index ? null : (
+                  <button className="edit-btn" onClick={() => handleEdit(index)}>
+                    <FaEdit />
+                  </button>
+                )}
+                <button
+                  className="delete-btn"
+                  onClick={() => deleteTask(index)}
+                >
+                  <FaTrash />
+                </button>
+              </div>
             </li>
           ))}
         </ul>
