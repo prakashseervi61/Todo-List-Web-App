@@ -1,26 +1,36 @@
 # React To-Do List App (Vite)
 
-A simple and efficient To-Do List web application built using React.js and Vite. This project allows users to add, view, and manage tasks interactively using React's state management.
+A simple, fast, and interactive To-Do List web application built using React and Vite. Users can add, complete, edit, and delete tasks in a streamlined interface with theme switching and progress tracking.
+
+---
 
 ## Features
 
-- Add and remove tasks
+- Add, delete, and edit tasks
 - Mark tasks as completed
-- Dynamic UI updates using React Hooks
-- Fast development experience using Vite
-- Modular component structure
+- Live progress bar for task completion
+- Toggle between light and dark themes
+- Responsive and accessible UI
+- Scrollable and styled task list
+- Font Awesome icons for action buttons
+
+---
 
 ## Tech Stack
 
 - **React.js** – UI development
 - **Vite** – Fast build and dev server
 - **JavaScript (ES6+)**
-- **CSS** – Basic styling
-- **uuid** – For generating unique task IDs
+- **CSS** – Styling and scrollbar customization
+- **React Icons** – Font Awesome icon integration
+
+---
 
 ## Getting Started
 
-### Install Dependencies
+### Clone and Install
 
 ```bash
+git clone https://github.com/<your-username>/<your-repo>.git
+cd <your-repo>
 npm install
