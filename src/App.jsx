@@ -8,6 +8,7 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedText, setEditedText] = useState('');
+  const [showResetModal, setShowResetModal] = useState(false  );
 
   const addTask = () => {
     if (newTask.trim() === '' || editingIndex !== null) return;
@@ -47,17 +48,37 @@ function App() {
     setEditedText('');
   };
 
+  const handleResetClick = () => setShowResetModal(true);
+  const handleConfirmReset = () => {
+    setTasks([]);
+    setShowResetModal(false);
+  };
+  const handleCancelReset = () => setShowResetModal(false);
+
   const completedCount = tasks.filter(t => t.completed).length;
   const progress = tasks.length === 0 ? 0 : (completedCount / tasks.length) * 100;
 
   return (
     <div className={`app-wrapper ${isDarkMode ? 'dark' : 'light'}`}>
+      {showResetModal && (
+        <div className={`reset-overlay ${isDarkMode ? 'dark' : 'light'}`}>
+          <div className="reset-box">
+            <h2>Are you sure you want to reset?</h2>
+            <div className="reset-actions">
+              <button className="yes-btn" onClick={handleConfirmReset}>Yes</button>
+              <button className="no-btn" onClick={handleCancelReset}>No</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="top-bar">
-        <button className="reset-btn" onClick={() => setTasks([])}>Reset</button>
+        <button className="reset-btn" onClick={handleResetClick}>Reset</button>
         <button className="theme-toggle" onClick={toggleTheme}>
           {isDarkMode ? 'Light Mode' : 'Dark Mode'}
         </button>
       </div>
+
       <div className="app-container">
         <div className="title-row">
           <h1>To-Do-List</h1>
@@ -65,6 +86,7 @@ function App() {
             {completedCount} / {tasks.length} tasks
           </span>
         </div>
+
         <div className="progress-bar-container">
           <div className="progress-bar-bg">
             <div className="progress-bar-fg" style={{ width: `${progress}%` }} />
@@ -73,6 +95,7 @@ function App() {
             {tasks.length === 0 ? "0%" : `${Math.round(progress)}%`} Done
           </span>
         </div>
+
         <div className="input-section">
           <input
             type="text"
@@ -86,6 +109,7 @@ function App() {
           />
           <button onClick={addTask} className="add-btn" disabled={editingIndex !== null}>Add</button>
         </div>
+
         <ul>
           {tasks.map((task, index) => (
             <li key={index}>

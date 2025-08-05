@@ -307,3 +307,86 @@ li {
     max-height: 400px;
   }
 }
+
+.reset-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reset-overlay.light {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000;
+}
+
+.reset-overlay.dark {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+}
+
+.reset-box {
+  background-color: inherit;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.reset-actions {
+  margin-top: 20px;
+}
+
+.yes-btn, .no-btn {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.yes-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.no-btn {
+  background-color: #34d058;
+  color: white;
+}
+
+.reset-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reset-box {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  border: 3px solid #333;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.reset-overlay.dark .reset-box {
+  background-color: #1e1e1e;
+  color: white;
+  border: 3px solid #bbb;
+}
