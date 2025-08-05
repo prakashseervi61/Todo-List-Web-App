@@ -1,8 +1,15 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body, html {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  overflow: hidden;
+  height: 100%;
+  width: 100%;
 }
 
 .app-wrapper {
@@ -14,7 +21,9 @@ body, html {
   justify-content: center;
   align-items: flex-start;
   position: relative;
+  overflow-y: auto; 
 }
+
 
 .app-wrapper.light {
   background-color: #f0f0f0;
@@ -274,4 +283,27 @@ li {
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .app-container {
+    width: 100%;
+    padding: 20px 10px;
+    margin-top: 100px;
+  }
+
+  .input-section {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  ul {
+    max-height: 400px;
+  }
 }
