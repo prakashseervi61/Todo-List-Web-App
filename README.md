@@ -31,6 +31,7 @@ A simple, fast, and interactive To-Do List web application built using React and
 ### Clone and Install
 
 ```bash
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
+git clone https://github.com/prakashseervi61/Todo-List-Web-App.git
+cd Todo-List-Web-App
+git checkout react-version
 npm install
