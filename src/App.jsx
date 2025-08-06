@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 
@@ -8,7 +8,8 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedText, setEditedText] = useState('');
-  const [showResetModal, setShowResetModal] = useState(false  );
+  const [showResetModal, setShowResetModal] = useState(false);
+  const [time, setTime] = useState(new Date());
 
   const addTask = () => {
     if (newTask.trim() === '' || editingIndex !== null) return;
@@ -55,6 +56,13 @@ function App() {
   };
   const handleCancelReset = () => setShowResetModal(false);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   const completedCount = tasks.filter(t => t.completed).length;
   const progress = tasks.length === 0 ? 0 : (completedCount / tasks.length) * 100;
 
@@ -74,6 +82,10 @@ function App() {
 
       <div className="top-bar">
         <button className="reset-btn" onClick={handleResetClick}>Reset</button>
+        <div className="clock">
+          <div>{time.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
+          <div>{time.toLocaleDateString('en-IN', { weekday: 'long' })}</div>
+        </div>
         <button className="theme-toggle" onClick={toggleTheme}>
           {isDarkMode ? 'Light Mode' : 'Dark Mode'}
         </button>

@@ -404,3 +404,37 @@ li {
 .save-btn:hover {
   background-color: #45a049;
 }
+
+.clock {
+  text-align: center;
+  padding: 0.4rem 0.8rem;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  min-width: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.light .clock div:first-child {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.light .clock div:last-child {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.dark .clock div:first-child {
+  font-size: 0.75rem;
+  color: #ccc;
+}
+
+.dark .clock div:last-child {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
