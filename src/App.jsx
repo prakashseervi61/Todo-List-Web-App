@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { FaTrash, FaEdit } from 'react-icons/fa';
+import { FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -142,7 +142,11 @@ function App() {
                 )}
               </label>
               <div className="action-buttons">
-                {editingIndex === index ? null : (
+                {editingIndex === index ? (
+                  <button className="save-btn" onClick={() => saveEdit(index)}>
+                    <FaCheck />
+                  </button>
+                ) : (
                   <button className="edit-btn" onClick={() => handleEdit(index)}>
                     <FaEdit />
                   </button>

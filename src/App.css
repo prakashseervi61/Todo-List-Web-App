@@ -390,3 +390,17 @@ li {
   color: white;
   border: 3px solid #bbb;
 }
+
+.save-btn {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  margin-right: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background-color: #45a049;
+}
