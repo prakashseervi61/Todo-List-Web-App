@@ -438,3 +438,21 @@ li {
   color: #fff;
 }
 
+.task-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+.task-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.task-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+.task-exit-active {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 300ms, transform 300ms;
+}

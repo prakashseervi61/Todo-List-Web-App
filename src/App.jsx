@@ -3,13 +3,23 @@ import './App.css';
 import { FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 
 function App() {
-  const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedText, setEditedText] = useState('');
   const [showResetModal, setShowResetModal] = useState(false);
   const [time, setTime] = useState(new Date());
+
+  const [tasks, setTasks] = useState(() => {
+    const saved = localStorage.getItem('tasks');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
+  const sortedTasks = [...tasks].sort((a, b) => a.completed - b.completed);
 
   const addTask = () => {
     if (newTask.trim() === '' || editingIndex !== null) return;
@@ -26,11 +36,10 @@ function App() {
   };
 
   const toggleCompleted = (index) => {
-    setTasks(
-      tasks.map((task, i) =>
-        i === index ? { ...task, completed: !task.completed } : task
-      )
+    const updated = tasks.map((task, i) =>
+      i === index ? { ...task, completed: !task.completed } : task
     );
+    setTasks(updated);
   };
 
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
@@ -83,8 +92,12 @@ function App() {
       <div className="top-bar">
         <button className="reset-btn" onClick={handleResetClick}>Reset</button>
         <div className="clock">
-          <div>{time.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
-          <div>{time.toLocaleDateString('en-IN', { weekday: 'long' })}</div>
+          <div className="date">
+            {time.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
+          </div>
+          <div className="day">
+            {time.toLocaleDateString('en-IN', { weekday: 'long' })}
+          </div>
         </div>
         <button className="theme-toggle" onClick={toggleTheme}>
           {isDarkMode ? 'Light Mode' : 'Dark Mode'}
@@ -123,55 +136,55 @@ function App() {
         </div>
 
         <ul>
-          {tasks.map((task, index) => (
-            <li key={index}>
-              <label className="task-item">
-                <input
-                  type="checkbox"
-                  checked={task.completed}
-                  onChange={() => toggleCompleted(index)}
-                  className="task-checkbox"
-                />
-                {editingIndex === index ? (
+          {sortedTasks.map((task, index) => {
+            const originalIndex = tasks.findIndex(t => t === task);
+            return (
+              <li key={originalIndex}>
+                <label className="task-item">
                   <input
-                    type="text"
-                    value={editedText}
-                    onChange={(e) => setEditedText(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') saveEdit(index);
-                    }}
-                    autoFocus
+                    type="checkbox"
+                    checked={task.completed}
+                    onChange={() => toggleCompleted(originalIndex)}
+                    className="task-checkbox"
                   />
-                ) : (
-                  <span
-                    style={{
-                      textDecoration: task.completed ? 'line-through' : 'none',
-                      color: task.completed ? 'gray' : undefined
-                    }}
-                  >
-                    {task.text}
-                  </span>
-                )}
-              </label>
-              <div className="action-buttons">
-                {editingIndex === index ? (
-                  <button className="save-btn" onClick={() => saveEdit(index)}>
-                    <FaCheck />
+                  {editingIndex === originalIndex ? (
+                    <input
+                      type="text"
+                      value={editedText}
+                      onChange={(e) => setEditedText(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') saveEdit(originalIndex);
+                      }}
+                      autoFocus
+                    />
+                  ) : (
+                    <span
+                      style={{
+                        textDecoration: task.completed ? 'line-through' : 'none',
+                        color: task.completed ? 'gray' : undefined
+                      }}
+                    >
+                      {task.text}
+                    </span>
+                  )}
+                </label>
+                <div className="action-buttons">
+                  {editingIndex === originalIndex ? (
+                    <button className="save-btn" onClick={() => saveEdit(originalIndex)}>
+                      <FaCheck />
+                    </button>
+                  ) : (
+                    <button className="edit-btn" onClick={() => handleEdit(originalIndex)}>
+                      <FaEdit />
+                    </button>
+                  )}
+                  <button className="delete-btn" onClick={() => deleteTask(originalIndex)}>
+                    <FaTrash />
                   </button>
-                ) : (
-                  <button className="edit-btn" onClick={() => handleEdit(index)}>
-                    <FaEdit />
-                  </button>
-                )}
-                <button
-                  className="delete-btn"
-                  onClick={() => deleteTask(index)}
-                >
-                  <FaTrash />
-                </button>
-              </div>
-            </li>
-          ))}
+                </div>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
