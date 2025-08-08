@@ -19,6 +19,8 @@ A simple, fast, and interactive To-Do List web application built using React and
 - **CSS** – Styling, animations, and scrollbar customization  
 - **React Icons** – Font Awesome icon integration  
 
+[Live Demo](https://prakashseervi61.github.io/Todo-List-Web-App/)
+
 ## Getting Started
 1. **Clone the repository**
    ```bash
