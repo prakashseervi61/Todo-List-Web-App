@@ -1,253 +1,156 @@
-*{
-  box-sizing: border-box;
+/* =========================================
+   Global Reset: Box sizing and margin/padding
+   ========================================= */
+* {
+  box-sizing: border-box; /* Include padding and border in element’s width/height */
   margin: 0;
   padding: 0;
 }
 
+/* =========================================
+   Base Styles: body & html
+   ========================================= */
 body, html {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  height: 100%;
+  font-family: sans-serif; /* Use a clean default font */
+  height: 100%;            /* Ensure full-height wrapper */
   width: 100%;
 }
 
+/* =========================================
+   Wrapper: background, theme, scrolling
+   ========================================= */
 .app-wrapper {
-  background-color: #111;
-  color: #fff;
-  min-height: 100vh;
-  padding: 40px 10px;
+  background-color: #111; /* Dark theme background */
+  color: #fff;            /* Light text */
+  min-height: 100vh;      /* Full viewport height */
+  padding: 40px 10px;     /* Outer spacing */
   display: flex;
   justify-content: center;
   align-items: flex-start;
   position: relative;
-  overflow-y: auto; 
+  overflow-y: auto;       /* Page-level scrolling */
 }
-
-
 .app-wrapper.light {
-  background-color: #f0f0f0;
-  color: #111;
+  background-color: #f0f0f0; /* Light theme background */
+  color: #111;               /* Dark text */
 }
 
+/* =========================================
+   Top Bar: reset button, clock, theme toggle
+   ========================================= */
 .top-bar {
   position: absolute;
-  top: 15px;
-  left: 0;
-  right: 0;
+  top: 15px; left: 0; right: 0;
   display: flex;
   justify-content: space-between;
   padding: 0 16px;
-  box-sizing: border-box;
   z-index: 10;
 }
-
-.theme-toggle,
-.reset-btn {
+.reset-btn,
+.theme-toggle {
   min-width: 100px;
   padding: 8px 16px;
   font-size: 14px;
-  border-radius: 6px;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
   text-align: center;
-  box-sizing: border-box;
 }
-
 .reset-btn {
-  background-color: #ffc107;
-  color: black;
+  background-color: #ffc107; /* Warning yellow */
+  color: #000;
 }
-
 .theme-toggle {
-  background-color: #28a745;
-  color: white;
+  background-color: #28a745; /* Success green */
+  color: #fff;
 }
 
-.app-container {
-  background-color: #1f1f1f;
+/* Clock display in top bar */
+.clock {
+  display: inline-block;
+  text-align: center;
+  padding: 0.4rem 0.8rem;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  padding: 30px;
+  background-color: rgba(255,255,255,0.1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  min-width: 100px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.app-wrapper.light .clock {
+  background-color: rgba(0,0,0,0.05);
+  border-color: #ccc;
+}
+.clock .date {
+  font-size: 0.75rem; /* Smaller date text */
+}
+.clock .day {
+  font-size: 1.2rem;  /* Larger day text */
+  font-weight: 600;
+}
+
+/* =========================================
+   Main Container: card holding tasks
+   ========================================= */
+.app-container {
+  margin-top: 80px;       /* Push down below top bar */
   width: 90%;
   max-width: 500px;
+  padding: 30px;
+  background-color: #1f1f1f; /* Dark card background */
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: background 0.3s, box-shadow 0.3s;
   text-align: center;
-  min-height: 200px;
-  transition: all 0.3s ease;
-  margin-top: 80px;
 }
-
 .app-wrapper.light .app-container {
-  background-color: #fff;
+  background-color: #fff; /* Light card background */
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-h1 {
-  margin-bottom: 20px;
-}
-
-.input-section {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-input[type="text"] {
-  background-color: #111;
-  color: #f5f5f5;
-  border: 1px solid #444;
-  padding: 10px;
-  border-radius: 4px;
-  outline: none;
-  flex-grow: 1;
-  font-size: 16px;
-}
-
-input[type="text"]::placeholder {
-  color: #aaa;
-}
-
-.app-wrapper.light input[type="text"] {
-  background-color: #fff;
-  color: #111;
-  border: 1px solid #ccc;
-}
-
-.app-wrapper.light input[type="text"]::placeholder {
-  color: #666;
-}
-
-.add-btn {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  padding: 10px 14px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-  max-height: 280px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-}
-
-.app-wrapper.light ul {
-  scrollbar-color: #bbb #f0f0f0;
-}
-
-.app-wrapper.dark ul {
-  scrollbar-color: #555 #222;
-}
-
-ul::-webkit-scrollbar {
-  width: 8px;
-}
-
-ul::-webkit-scrollbar-track {
-  background: #f0f0f0;
-  border-radius: 4px;
-}
-
-ul::-webkit-scrollbar-thumb {
-  background-color: #bbb;
-  border-radius: 4px;
-  border: 2px solid #f0f0f0;
-}
-
-.app-wrapper.dark ul::-webkit-scrollbar-track {
-  background: #222;
-}
-
-.app-wrapper.dark ul::-webkit-scrollbar-thumb {
-  background-color: #555;
-  border: 2px solid #222;
-}
-
-li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #1e1e1e;
-  padding: 12px 16px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  border: 1px solid #333;
-  color: #f5f5f5;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-.app-wrapper.light li {
-  background-color: #f9f9f9;
-  color: #111;
-  border: 1px solid #ccc;
-}
-
-.delete-btn {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
+/* =========================================
+   Title Row: heading and task count
+   ========================================= */
 .title-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 12px;
 }
-
 .title-row h1 {
-  margin: 0;
   font-size: 2rem;
   font-weight: 600;
-  text-align: left;
 }
-
 .task-count {
   font-size: 1.05rem;
   color: #999;
-  margin-left: 12px;
 }
 
+/* =========================================
+   Progress Bar: container and fill
+   ========================================= */
 .progress-bar-container {
-  width: 100%;
-  margin-bottom: 20px;
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-bottom: 20px;
 }
-
 .progress-bar-bg {
   flex: 1;
   height: 10px;
   background: #e0e0e0;
   border-radius: 5px;
   overflow: hidden;
-  position: relative;
 }
-
 .progress-bar-fg {
   height: 100%;
   background: #28a745;
   border-radius: 5px 0 0 5px;
   transition: width 0.4s;
 }
-
 .progress-label {
   font-size: 0.98rem;
   color: #888;
-  min-width: 48px;
 }
-
 .app-wrapper.dark .progress-bar-bg {
   background: #333;
 }
@@ -258,186 +161,228 @@ li {
   color: #aaa;
 }
 
+/* =========================================
+   Input Section: new task entry
+   ========================================= */
+.input-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.input-section input[type="text"] {
+  flex: 1;                    /* Expand to fill */
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background-color: #111;
+  color: #f5f5f5;
+  font-size: 16px;
+}
+.input-section input[type="text"]::placeholder {
+  color: #aaa;
+}
+.app-wrapper.light .input-section input[type="text"] {
+  background-color: #fff;
+  color: #111;
+  border: 1px solid #ccc;
+}
+.add-btn {
+  padding: 10px 14px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* =========================================
+   Task List: scrollable UL
+   ========================================= */
+ul {
+  list-style: none;
+  max-height: 280px;
+  overflow-y: auto;
+}
+.app-wrapper.light ul {
+  scrollbar-color: #bbb #f0f0f0;
+}
+.app-wrapper.dark ul {
+  scrollbar-color: #555 #222;
+}
+ul::-webkit-scrollbar {
+  width: 8px;
+}
+ul::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+ul::-webkit-scrollbar-thumb {
+  background-color: #bbb;
+  border-radius: 4px;
+  border: 2px solid #f0f0f0;
+}
+.app-wrapper.dark ul::-webkit-scrollbar-track {
+  background: #222;
+}
+.app-wrapper.dark ul::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border: 2px solid #222;
+}
+
+/* =========================================
+   Task Item: layout, styling & completed state
+   ========================================= */
+li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #1e1e1e;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  transition: background 0.3s;
+}
+.app-wrapper.light li {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  color: #111;
+}
+li.completed {
+  opacity: 0.6; /* Dim completed items */
+}
+
+/* Task checkbox and text input */
 .task-item {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex: 1; /* Grow to fill list item */
 }
-
 .task-checkbox {
   width: 18px;
   height: 18px;
 }
+/* Edit input: full width in list */
+.edit-input {
+  flex: 1;
+  padding: 8px 10px;
+  margin: 0 8px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background-color: #111;
+  color: #f5f5f5;
+  font-size: 16px;
+}
+.app-wrapper.light .edit-input {
+  background-color: #fff;
+  color: #111;
+  border: 1px solid #ccc;
+}
 
+/* =========================================
+   Action Buttons: edit, save, delete
+   ========================================= */
 .action-buttons {
   display: flex;
   gap: 8px;
   align-items: center;
 }
-
 .edit-btn {
-  background-color: #17a2b8;
-  color: white;
+  background-color: #17a2b8; /* Info blue */
+  color: #fff;
   border: none;
   padding: 6px 10px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+}
+.save-btn {
+  background-color: #4CAF50; /* Save green */
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.delete-btn {
+  background-color: #dc3545; /* Danger red */
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
+/* =========================================
+   Reset Modal: overlay and modal box
+   ========================================= */
+.reset-overlay {
+  position: fixed;
+  inset: 0; /* shorthand for top/right/bottom/left: 0 */
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.reset-overlay.light {
+  background-color: rgba(255,255,255,0.8);
+}
+.reset-box {
+  background: inherit; /* match theme */
+  padding: 2rem;
+  border-radius: 10px;
+  border: 3px solid currentColor;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+}
+.reset-actions {
+  margin-top: 20px;
+}
+.yes-btn, .no-btn {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.yes-btn {
+  background-color: #e74c3c;
+  color: #fff;
+}
+.no-btn {
+  background-color: #34d058;
+  color: #fff;
+}
+
+/* =========================================
+   Responsive: mobile styling
+   ========================================= */
 @media (max-width: 600px) {
   .app-container {
-    width: 100%;
-    padding: 20px 10px;
     margin-top: 100px;
+    padding: 20px 10px;
   }
-
   .input-section {
     flex-direction: column;
     gap: 12px;
   }
-
   .title-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
   }
-
   ul {
     max-height: 400px;
   }
 }
 
-.reset-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.reset-overlay.light {
-  background-color: rgba(255, 255, 255, 0.8);
-  color: #000;
-}
-
-.reset-overlay.dark {
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
-}
-
-.reset-box {
-  background-color: inherit;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  text-align: center;
-}
-
-.reset-actions {
-  margin-top: 20px;
-}
-
-.yes-btn, .no-btn {
-  margin: 0 10px;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  border-radius: 6px;
-  font-weight: bold;
-}
-
-.yes-btn {
-  background-color: #e74c3c;
-  color: white;
-}
-
-.no-btn {
-  background-color: #34d058;
-  color: white;
-}
-
-.reset-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.reset-box {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 10px;
-  border: 3px solid #333;
-  text-align: center;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-.reset-overlay.dark .reset-box {
-  background-color: #1e1e1e;
-  color: white;
-  border: 3px solid #bbb;
-}
-
-.save-btn {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 6px 10px;
-  margin-right: 5px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.save-btn:hover {
-  background-color: #45a049;
-}
-
-.clock {
-  text-align: center;
-  padding: 0.4rem 0.8rem;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  display: inline-block;
-  min-width: 100px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.light .clock div:first-child {
-  font-size: 0.75rem;
-  color: #666;
-}
-
-.light .clock div:last-child {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #222;
-}
-
-.dark .clock div:first-child {
-  font-size: 0.75rem;
-  color: #ccc;
-}
-
-.dark .clock div:last-child {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #fff;
-}
-
+/* =========================================
+   Task Animation (optional)
+   ========================================= */
 .task-enter {
   opacity: 0;
   transform: translateY(-10px);

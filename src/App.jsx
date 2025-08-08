@@ -3,31 +3,57 @@ import './App.css';
 import { FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 
 function App() {
+  // ——————————————————————
+  // State Definitions
+  // ——————————————————————
+  const [tasks, setTasks] = useState(() => {
+    // Load tasks from localStorage or start with an empty array
+    const saved = localStorage.getItem('tasks');
+    return saved ? JSON.parse(saved) : [];
+  });
   const [newTask, setNewTask] = useState('');
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    // Load theme preference from localStorage or default to false
+    return localStorage.getItem('theme') === 'dark';
+  });
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedText, setEditedText] = useState('');
   const [showResetModal, setShowResetModal] = useState(false);
   const [time, setTime] = useState(new Date());
 
-  const [tasks, setTasks] = useState(() => {
-    const saved = localStorage.getItem('tasks');
-    return saved ? JSON.parse(saved) : [];
-  });
-
+  // ——————————————————————
+  // Effects: Persist data & Clock
+  // ——————————————————————
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-  const sortedTasks = [...tasks].sort((a, b) => a.completed - b.completed);
+  useEffect(() => {
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+  }, [isDarkMode]);
 
+  useEffect(() => {
+    const interval = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // ——————————————————————
+  // Derived Values
+  // ——————————————————————
+  const sortedTasks = [...tasks].sort((a, b) => a.completed - b.completed);
+  const completedCount = tasks.filter(t => t.completed).length;
+  const progress = tasks.length === 0 ? 0 : (completedCount / tasks.length) * 100;
+
+  // ——————————————————————
+  // Handlers
+  // ——————————————————————
   const addTask = () => {
-    if (newTask.trim() === '' || editingIndex !== null) return;
+    if (!newTask.trim() || editingIndex !== null) return;
     setTasks([...tasks, { text: newTask, completed: false }]);
     setNewTask('');
   };
 
-  const deleteTask = (index) => {
+  const deleteTask = index => {
     setTasks(tasks.filter((_, i) => i !== index));
     if (editingIndex === index) {
       setEditingIndex(null);
@@ -35,29 +61,27 @@ function App() {
     }
   };
 
-  const toggleCompleted = (index) => {
-    const updated = tasks.map((task, i) =>
-      i === index ? { ...task, completed: !task.completed } : task
-    );
-    setTasks(updated);
+  const toggleCompleted = index => {
+    setTasks(tasks.map((t, i) =>
+      i === index ? { ...t, completed: !t.completed } : t
+    ));
   };
 
-  const toggleTheme = () => setIsDarkMode(!isDarkMode);
-
-  const handleEdit = (index) => {
+  const handleEdit = index => {
     setEditingIndex(index);
     setEditedText(tasks[index].text);
   };
 
-  const saveEdit = (index) => {
-    if (editedText.trim() === '') return;
-    const updatedTasks = [...tasks];
-    updatedTasks[index].text = editedText;
-    setTasks(updatedTasks);
+  const saveEdit = index => {
+    if (!editedText.trim()) return;
+    const updated = [...tasks];
+    updated[index].text = editedText;
+    setTasks(updated);
     setEditingIndex(null);
     setEditedText('');
   };
 
+  const toggleTheme = () => setIsDarkMode(!isDarkMode);
   const handleResetClick = () => setShowResetModal(true);
   const handleConfirmReset = () => {
     setTasks([]);
@@ -65,18 +89,12 @@ function App() {
   };
   const handleCancelReset = () => setShowResetModal(false);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const completedCount = tasks.filter(t => t.completed).length;
-  const progress = tasks.length === 0 ? 0 : (completedCount / tasks.length) * 100;
-
+  // ——————————————————————
+  // Render
+  // ——————————————————————
   return (
     <div className={`app-wrapper ${isDarkMode ? 'dark' : 'light'}`}>
+      {/* Reset Confirmation Modal */}
       {showResetModal && (
         <div className={`reset-overlay ${isDarkMode ? 'dark' : 'light'}`}>
           <div className="reset-box">
@@ -89,6 +107,7 @@ function App() {
         </div>
       )}
 
+      {/* Top Bar: Reset, Clock, Theme Toggle */}
       <div className="top-bar">
         <button className="reset-btn" onClick={handleResetClick}>Reset</button>
         <div className="clock">
@@ -104,14 +123,15 @@ function App() {
         </button>
       </div>
 
+      {/* Main App Container */}
       <div className="app-container">
+        {/* Title and Task Count */}
         <div className="title-row">
           <h1>To-Do-List</h1>
-          <span className="task-count">
-            {completedCount} / {tasks.length} tasks
-          </span>
+          <span className="task-count">{completedCount} / {tasks.length} tasks</span>
         </div>
 
+        {/* Progress Bar */}
         <div className="progress-bar-container">
           <div className="progress-bar-bg">
             <div className="progress-bar-fg" style={{ width: `${progress}%` }} />
@@ -121,51 +141,43 @@ function App() {
           </span>
         </div>
 
+        {/* Input Section */}
         <div className="input-section">
           <input
             type="text"
             placeholder="Add a new task"
             value={newTask}
             onChange={e => setNewTask(e.target.value)}
-            onKeyDown={e => {
-              if (e.key === 'Enter') addTask();
-            }}
+            onKeyDown={e => e.key === 'Enter' && addTask()}
             disabled={editingIndex !== null}
           />
           <button onClick={addTask} className="add-btn" disabled={editingIndex !== null}>Add</button>
         </div>
 
+        {/* Task List */}
         <ul>
-          {sortedTasks.map((task, index) => {
-            const originalIndex = tasks.findIndex(t => t === task);
+          {sortedTasks.map((task, _, arr) => {
+            const originalIndex = tasks.indexOf(task);
             return (
-              <li key={originalIndex}>
+              <li key={originalIndex} className={task.completed ? 'completed' : ''}>
                 <label className="task-item">
                   <input
                     type="checkbox"
                     checked={task.completed}
                     onChange={() => toggleCompleted(originalIndex)}
-                    className="task-checkbox"
                   />
                   {editingIndex === originalIndex ? (
                     <input
                       type="text"
+                      className="edit-input"
                       value={editedText}
-                      onChange={(e) => setEditedText(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') saveEdit(originalIndex);
-                      }}
+                      onChange={e => setEditedText(e.target.value)}
+                      onKeyDown={e => e.key === 'Enter' && saveEdit(originalIndex)}
+                      onBlur={() => saveEdit(originalIndex)}
                       autoFocus
                     />
                   ) : (
-                    <span
-                      style={{
-                        textDecoration: task.completed ? 'line-through' : 'none',
-                        color: task.completed ? 'gray' : undefined
-                      }}
-                    >
-                      {task.text}
-                    </span>
+                    <span>{task.text}</span>
                   )}
                 </label>
                 <div className="action-buttons">
