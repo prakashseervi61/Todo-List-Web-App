@@ -1,0 +1,127 @@
+/* Icon sizes */
+.icon-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Progress percentage */
+.progress-percentage {
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+.dark .progress-percentage {
+    color: var(--color-primary-dark);
+}
+
+/* Modal styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    animation: fade-in 0.2s ease-out;
+}
+
+.dark .modal-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    background-color: var(--color-surface);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    max-width: 28rem;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--color-border);
+    animation: slide-up 0.3s ease-out;
+}
+
+.dark .modal-content {
+    background-color: var(--color-surface-dark);
+    border-color: var(--color-border-dark);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+}
+
+.dark .modal-title {
+    color: var(--color-text-dark);
+}
+
+.modal-message {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-secondary);
+}
+
+.dark .modal-message {
+    color: var(--color-text-secondary-dark);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+/* Toast styles */
+.toast {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background-color: var(--color-surface-dark);
+    color: var(--color-text-dark);
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--color-border-dark);
+    animation: fade-in 0.3s ease-out;
+    z-index: 50;
+    max-width: calc(100vw - 2rem);
+}
+
+.toast-message {
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
