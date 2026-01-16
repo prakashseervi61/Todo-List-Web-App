@@ -1,6 +1,6 @@
 # Modern React Todo List App
 
-A sleek, dark-themed todo list application with a fixed layout and scrollable task container. Built with React, Vite, and Tailwind CSS.
+A sleek, dark-themed todo list application with a fixed layout and scrollable task container. Built with React and Vite.
 
 ## Features
 
@@ -27,6 +27,7 @@ A sleek, dark-themed todo list application with a fixed layout and scrollable ta
 ### Run the application:
 
 ```bash
+npm install
 npm run dev
 ```
 
@@ -48,7 +49,7 @@ src/
 │   └── helpers.js           # Utility functions
 ├── App.jsx                  # Main app component
 ├── main.jsx                 # Entry point
-└── index.css                # Tailwind CSS imports
+└── index.css                # Custom CSS styles
 ```
 
 ## Usage
@@ -62,7 +63,7 @@ src/
 
 ## Technologies
 
-- React 18
+- React 19
 - Vite
-- Tailwind CSS
+- Custom CSS
 - LocalStorage API
